@@ -460,6 +460,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "omnistacks-indexer"
+version = "0.1.0"
+dependencies = [
+ "omnistacks-data",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
 name = "omnistacks-node-listener"
 version = "0.1.0"
 dependencies = [

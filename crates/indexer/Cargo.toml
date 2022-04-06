@@ -1,0 +1,12 @@
+[package]
+name = "omnistacks-indexer"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tracing = "0.1.32"
+tracing-subscriber = { version = "0.3.10", features = ["env-filter"] }
+
+tokio = { version = "1.0", features = ["full"] }
+
+omnistacks-data =  { version = "0.1.0", path = "../data" }
