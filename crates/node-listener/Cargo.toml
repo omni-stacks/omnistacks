@@ -1,0 +1,16 @@
+[package]
+name = "omnistacks-node-listener"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tracing = "0.1.32"
+tracing-subscriber = { version = "0.3.10", features = ["env-filter"] }
+
+tokio = { version = "1.0", features = ["full"] }
+axum  = { version = "0.5.1" }
+
+serde = { version = "1", features = ["derive"] } # not needed?
+serde_json = { version = "1" }
+
+omnistacks-data =  { version = "0.1.0", path = "../data" }

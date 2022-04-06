@@ -1,0 +1,16 @@
+[package]
+name = "omnistacks-data"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+dotenv = "0.15.0"
+anyhow = "1.0.56"
+tracing = "0.1.32"
+chrono = "0.4.19"
+
+diesel = { version = "1.4.8", features = ["postgres", "serde_json", "r2d2", "chrono"] }
+diesel_migrations = "1.4.0"
+
+serde_json = { version = "1.0.79" }
