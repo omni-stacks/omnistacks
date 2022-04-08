@@ -8,6 +8,7 @@ use axum::{
 };
 
 use omnistacks_data::{
+    custom_types::MessageType,
     db::{self, *},
     db_pool::{self, ConnectionPool},
     models::NewNodeMessage,
@@ -47,7 +48,11 @@ async fn main() {
         .unwrap();
 }
 
-async fn save_message(message_type: &str, body: Value, pool: ConnectionPool) -> impl IntoResponse {
+async fn save_message(
+    message_type: MessageType,
+    body: Value,
+    pool: ConnectionPool,
+) -> impl IntoResponse {
     match pool.get() {
         Ok(conn) => {
             let new_node_message = NewNodeMessage {
@@ -88,40 +93,40 @@ async fn new_burn_block_handler(
     Json(body): Json<Value>,
     Extension(pool): Extension<ConnectionPool>,
 ) -> impl IntoResponse {
-    save_message("new_burn_block", body, pool).await
+    save_message(MessageType::NewBurnBlock, body, pool).await
 }
 
 async fn new_block_handler(
     Json(body): Json<Value>,
     Extension(pool): Extension<ConnectionPool>,
 ) -> impl IntoResponse {
-    save_message("new_block", body, pool).await
+    save_message(MessageType::NewBlock, body, pool).await
 }
 
 async fn new_mempool_tx_handler(
     Json(body): Json<Value>,
     Extension(pool): Extension<ConnectionPool>,
 ) -> impl IntoResponse {
-    save_message("new_mempool_tx", body, pool).await
+    save_message(MessageType::NewMempoolTx, body, pool).await
 }
 
 async fn drop_mempool_tx_handler(
     Json(body): Json<Value>,
     Extension(pool): Extension<ConnectionPool>,
 ) -> impl IntoResponse {
-    save_message("drop_mempool_tx", body, pool).await
+    save_message(MessageType::DropMempoolTx, body, pool).await
 }
 
 async fn new_attachments_handler(
     Json(body): Json<Value>,
     Extension(pool): Extension<ConnectionPool>,
 ) -> impl IntoResponse {
-    save_message("new_attachments", body, pool).await
+    save_message(MessageType::NewAttachments, body, pool).await
 }
 
 async fn new_microblocks_handler(
     Json(body): Json<Value>,
     Extension(pool): Extension<ConnectionPool>,
 ) -> impl IntoResponse {
-    save_message("new_microblocks", body, pool).await
+    save_message(MessageType::NewMicroBlocks, body, pool).await
 }
