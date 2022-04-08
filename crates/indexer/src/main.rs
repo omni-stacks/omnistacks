@@ -5,7 +5,9 @@ use tracing::{error, info};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, EnvFilter};
 
 pub use omnistacks_data::schema::node_messages::dsl::*;
-use omnistacks_data::{db::*, db_pool, models::NodeMessage};
+use omnistacks_data::{custom_types::MessageType, db::*, db_pool, models::NodeMessage};
+
+mod burn_block;
 
 pub fn main() {
     tracing_subscriber::registry()
@@ -28,14 +30,20 @@ async fn run() {
 
     loop {
         let conn = db_pool.get().expect("Failed to get DB connection");
-        match node_messages
+        let results = node_messages
             .filter(id.gt(last_processed_message_id))
             .limit(10)
-            .load::<NodeMessage>(&conn)
-        {
+            .load::<NodeMessage>(&conn);
+        match results {
             Ok(messages) => {
                 for msg in &messages {
                     info!("Processing message [{}][{}]", msg.message_type, msg.id);
+
+                    match &msg.message_type {
+                        MessageType::NewBurnBlock => burn_block::process(&msg.body),
+                        _ => {}
+                    }
+
                     last_processed_message_id = msg.id;
                 }
 

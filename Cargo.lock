@@ -455,6 +455,7 @@ dependencies = [
  "diesel",
  "diesel_migrations",
  "dotenv",
+ "serde",
  "serde_json",
  "tracing",
 ]
@@ -464,6 +465,7 @@ name = "omnistacks-indexer"
 version = "0.1.0"
 dependencies = [
  "omnistacks-data",
+ "serde_json",
  "tokio",
  "tracing",
  "tracing-subscriber",

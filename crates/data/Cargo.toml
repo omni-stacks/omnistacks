@@ -13,4 +13,5 @@ chrono = "0.4.19"
 diesel = { version = "1.4.8", features = ["postgres", "serde_json", "r2d2", "chrono"] }
 diesel_migrations = "1.4.0"
 
+serde = { version = "1.0.136", features = ["derive"] }
 serde_json = { version = "1.0.79" }
